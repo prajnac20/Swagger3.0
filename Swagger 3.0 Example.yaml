@@ -1,0 +1,75 @@
+openapi: 3.0.0
+info:
+  title: Inventory API
+  description: Inventory API Demo
+  contact:
+    name: Dev@api.com
+    url: http://tutorialspedia.com
+  version: 1.1.1
+servers: 
+  - url: http://myapi.com
+  - url: http://exampleapi.com
+paths:
+  /inventory:
+    description: Item in the inventory
+    get:
+      description: Operation to fetch items in inventory
+      parameters: 
+        - in: query
+          name: item_name
+          required: true
+          schema:
+            type: string
+            example: Prestige 1000 Cooker
+      responses:
+        200:
+         description: success Response
+         content:
+           application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Item'
+                  
+    post:
+      description: Add a new item
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+                
+      responses:
+        201:
+          description: item added successfully
+  /items/{id}:
+    description: Get item based on Path Parameter
+    get:
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+         description: success Response with Path Param
+         content:
+           application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Item'
+components:
+  schemas:
+    Item:
+     type: object
+     properties:
+       Product_ID:
+        type: integer
+        example: 4
+       Product_Name:
+        type: string
+        example: Prestige 1000 Cooker
+      
+    
